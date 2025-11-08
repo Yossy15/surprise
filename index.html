@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รักเค้าไหม 💖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Itim', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffe4e1);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  h1 {
+    color: #ff1493;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+
+  .buttons {
+    font-family: 'Itim', cursive;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'Itim', cursive;
+    font-size: 1.5rem;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #yesBtn {
+    background-color: #ff69b4;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+  }
+
+  #noBtn {
+    background-color: #fff;
+    color: #ff69b4;
+    border: 2px solid #ff69b4;
+  }
+
+  #yesBtn:hover {
+    background-color: #ff85c1;
+  }
+
+  #noBtn:hover {
+    background-color: #ffe6f0;
+  }
+
+  /* Heart effect styles */
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 3s ease-in-out forwards;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-100vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.6rem;
+    }
+    button {
+      font-size: 1.2rem;
+      padding: 12px 30px;
+    }
+  }
+</style>
+</head>
+<body>
+  <img id="defaultImage" src="https://sdl-stickershop.line.naver.jp/products/0/0/1/18709650/LINEStorePC/main.png" alt="default" width="20%">
+  <img id="yesImage" src="https://stickershop.line-scdn.net/stickershop/v1/product/10711745/LINEStorePC/main.png?v=1" alt="yesBtn" width="20%" style="display: none;">
+  <img id="noImage" src="https://i.pinimg.com/originals/64/f6/3c/64f63c89622cf247cb0c2932192ede18.gif" alt="noBtn" width="20%" style="display: none;">
+  <h1>รักเค้าไหม? 💞</h1>
+  <div class="buttons">
+    <button id="yesBtn">รัก 💖</button>
+    <button id="noBtn">ไม่ 😜</button>
+  </div>
+  <div id="continueButton" style="display: none; margin-top: 50px;">
+    <button id="continueBtn" style="font-size: 1.2rem; padding: 10px 20px; background-color: #ff69b4; color: white; border: none; border-radius: 20px; cursor: pointer;">กดดูต่อสิบี๋</button>
+  </div>
+
+<script>
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const defaultImage = document.getElementById('defaultImage');
+  const yesImage = document.getElementById('yesImage');
+  const noImage = document.getElementById('noImage');
+  const continueButton = document.getElementById('continueButton');
+  const continueBtn = document.getElementById('continueBtn');
+
+  let noScale = 1;
+  let yesScale = 1;
+
+  // Function to create heart effect
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️';
+    heart.classList.add('heart');
+    
+    // Random position
+    const posX = Math.random() * window.innerWidth;
+    const posY = Math.random() * window.innerHeight;
+    
+    heart.style.left = `${posX}px`;
+    heart.style.top = `${posY}px`;
+    
+    // Random size
+    const size = Math.random() * 24 + 12;
+    heart.style.fontSize = `${size}px`;
+    
+    document.body.appendChild(heart);
+    
+    // Remove heart after animation completes
+    setTimeout(() => {
+      heart.remove();
+    }, 3000);
+  }
+
+  noBtn.addEventListener('click', () => {
+    // Hide default image and show noImage when "no" button is clicked
+    defaultImage.style.display = 'none';
+    noImage.style.display = 'block';
+    yesImage.style.display = 'none';
+    
+    // ลดขนาดปุ่ม "ไม่"
+    noScale -= 0.1;
+    if (noScale < 0.1) noScale = 0.1;
+    noBtn.style.transform = `scale(${noScale})`;
+
+    // ขยายปุ่ม "รัก"
+    yesScale += 0.2;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // ถ้าปุ่ม "รัก" ใหญ่พอ ให้ปิดปุ่ม "ไม่"
+    if (yesScale > 3) {
+      noBtn.style.display = 'none';
+    }
+  });
+
+  yesBtn.addEventListener('click', () => {
+    // Hide default image and show yesImage when "yes" button is clicked
+    defaultImage.style.display = 'none';
+    yesImage.style.display = 'block';
+    noImage.style.display = 'none';
+    
+    // Hide the "no" button
+    noBtn.style.display = 'none';
+    
+    // Create heart effects
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        createHeart();
+      }, i * 150);
+    }
+    
+    // Show the continue button
+    continueButton.style.display = 'block';
+  });
+
+  continueBtn.addEventListener('click', () => {
+    // Redirect to loveme.html when continue button is clicked
+    window.location.href = 'loveme.html';
+  });
+</script>
+
+</body>
+</html>
